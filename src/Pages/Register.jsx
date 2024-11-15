@@ -20,9 +20,15 @@ const Register = () => {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        CreateUser(data.email, data.password)
-        navigate("/")
-        // console.log(data);
+        const email = data.email;
+        const role = data.role;
+        const status = role ==="Buyer" ? "approped" : "pending";
+        const wishlist = [];
+        const userData = {email , role , status , wishlist}
+
+        // CreateUser(data.email, data.password)
+        // navigate("/")
+        console.log(userData);
 
     }
     return (
@@ -89,8 +95,8 @@ const Register = () => {
                                 </label>
                                 <select className="select select-bordered w-full max-w-xs" 
                                 {...register("role" ,{required:true})}>
-                                    <option>Biyer</option>
-                                    <option>Seler</option>
+                                    <option>Buyer</option>
+                                    <option>Seller</option>
                                 </select>
                                 {errors.role&& (
                                     <p className="text-red-500 font-light text-sm">You must have a roll</p>

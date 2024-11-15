@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase.config";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 
 
 export const AuthContext = createContext(null)
@@ -14,11 +15,10 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const googleProvider = new GoogleAuthProvider();
-
+    
     // const CreateUser = (email, password) => {
     //     return createUserWithEmailAndPassword(auth, email, password)
     // };
-
     const CreateUser = async (email, password) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -34,20 +34,33 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     };
 
-    // google login 
-
-    const GoogleLogin = () => {
-        return signInWithPopup(auth, googleProvider)
-    }
-
     const LogoutUser = () => {
         return signOut(auth)
+    }
+
+     // google login 
+     const GoogleLogin = () => {
+        return signInWithPopup(auth, googleProvider)
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setLoading(false);
+            if(currentUser){
+                axios.post("http://localhost:4000/authentication" , {
+                    email: currentUser.email})
+                    .then((data)=>{
+                        if(data.data){
+                            localStorage.setItem("access-token" , data?.data?.token);
+                            setLoading(false)
+                        }
+                    })
+            }else{
+                localStorage.removeItem("access-token");
+                setLoading(false);
+            }
+            
+           
         });
         return unsubscribe; // return directly without wrapping in another function
     }, []);
