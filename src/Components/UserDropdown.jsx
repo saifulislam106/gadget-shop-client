@@ -16,7 +16,7 @@ const UserDropdown = () => {
                 </div>
             </div></div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1]  p-2 shadow">
-                <li><Link>Dashbord</Link></li>
+                <li><Link to="dashboard">Dashboard</Link></li>
                 <li>
                     <button onClick={handleLogout} className="btn btn-outline btn-sm">Logout</button>
                 </li>

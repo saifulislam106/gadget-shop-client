@@ -5,7 +5,7 @@ import  UserDropdown from "./UserDropdown"
 
 const Header = () => {
   const {user} = useAuth()
-  console.log(user);
+  // console.log(user);
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
