@@ -7,46 +7,47 @@ import Contact from "../Pages/Contact";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import DashboardLayout from "../Layout/DashboardLayout";
-
+import PrivateRoute from "../routes/Private/PrivateRoute";
+import Overview from "../Pages/DashboardPage/Overview";
+import SellerRoute from "./Private/SellerRoute";
+import MyProduct from "../Components/Dashboard/Seller/MyProduct";
+import AddProduct from "../Components/Dashboard/Seller/AddProduct";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout></Layout>,
+    element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <Home></Home>
-      },
-      {
-        path: "/products",
-        element: <Products></Products>
-      },
-      {
-        path: "/about",
-        element: <About></About>
-      },
-      {
-        path: "/contacts",
-        element: <Contact></Contact>
-      },
-      {
-        path: "/login",
-        element: <Login></Login>
-      },
-      {
-        path: "/register",
-        element: <Register></Register>
-      },
+      { path: "/", element: <Home /> },
+      { path: "/products", element: <Products /> },
+      { path: "/about", element: <About /> },
+      { path: "/contacts", element: <Contact /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> }
     ]
   },
   {
-    path:"/dashboard",
-    element:<DashboardLayout/>,
-    children:[
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
       {
-
+        path: "/dashboard/overview",
+        element: <Overview />
       },
+      // seller routes 
+      {
+        path: "/dashboard/my-products",
+        element: <SellerRoute><MyProduct/></SellerRoute>,
+      },
+      {
+        path: "/dashboard/add-products",
+        element: <SellerRoute><AddProduct/></SellerRoute>,
+      },
+
     ]
   }
 ]);
