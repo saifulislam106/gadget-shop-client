@@ -7,7 +7,7 @@ const Header = () => {
   const {user} = useAuth()
   // console.log(user);
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 container mx-auto">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -33,7 +33,7 @@ const Header = () => {
             <li><NavLink to="/contacts">Contact</NavLink></li>
           </ul>
         </div>
-        <h2 className="btn btn-ghost text-xl">Gedget Shop</h2>
+        <h2 className="font-bold text-3xl">Gedget Shop</h2>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
