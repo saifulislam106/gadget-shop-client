@@ -1,18 +1,23 @@
 
 
-const ProductCard = ({p}) => {
-   const {title , brend ,price ,description , stock , cetagory } =p;
-   console.log(p);
+// eslint-disable-next-line react/prop-types
+const ProductCard = ({product}) => {
+    
+   // eslint-disable-next-line react/prop-types
+   const {title , brand ,price  , stock , category ,description , imageUrl } =product;
+   console.log(product);
     return (
-        <div className="card card-compact bg-base-100 w-96 shadow-xl">
+        <div className="">
                 <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes" />   
+                    src={imageUrl}
+                    alt="Product img" />   
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>
-                <h2 className="card-title">{brend}</h2>
-                <h2 className="card-title">{price}</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+               <p>{brand}</p>
+               <p>{price}</p>
+               <p>{stock}</p>
+               <p>{category}</p>
+               <p>{description}</p>
                 <div className="card-actions justify-end">
                     <button className="btn btn-primary">Buy Now</button>
                 </div>

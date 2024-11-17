@@ -15,13 +15,14 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         const title = data.title;
         const price = parseFloat(data.price);
-        const brend = data.brend;
+        const brand = data.brand;
         const stock = data.stock;
-        const cetagory = data.cetagory;
+        const imageUrl = data.imageUrl
+        const category = data.category;
         const description = data.description;
         const sellerEmial = user.email;
         const product ={
-            title ,price , brend, stock, cetagory, description, sellerEmial
+            title ,price , brand, stock, category, description, sellerEmial, imageUrl
         };
         const token = localStorage.getItem("access-token");
 
@@ -57,6 +58,17 @@ const AddProduct = () => {
                     />
                     {errors.title && (
                         <p className="text-red-500 font-light text-sm">Title is required</p>
+                    )}
+                </div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-bold">Image</span>
+                    </label>
+                    <input type="text" placeholder="imageUrl" className="input input-bordered"
+                        {...register("imageUrl", { required: true })}
+                    />
+                    {errors.imageUrl && (
+                        <p className="text-red-500 font-light text-sm">Photo is required</p>
                     )}
                 </div>
               <div className="flex gap-5 w-full">
@@ -97,13 +109,13 @@ const AddProduct = () => {
                 </div>
                 <div className="form-control w-full">
                     <label className="label">
-                        <span className="label-text font-bold">Cetagory</span>
+                        <span className="label-text font-bold">Category</span>
                     </label>
-                    <input type="text" placeholder="Cetagory" className="input input-bordered"
-                        {...register("cetagory", { required: true })}
+                    <input type="text" placeholder="Category" className="input input-bordered"
+                        {...register("category", { required: true })}
                     />
-                    {errors.cetagory && (
-                        <p className="text-red-500 font-light text-sm">Cetagory is required</p>
+                    {errors.category && (
+                        <p className="text-red-500 font-light text-sm">Category is required</p>
                     )}
                 </div>
                </div>
@@ -113,9 +125,9 @@ const AddProduct = () => {
                         </span>
                     </label>
                     <textarea type="text" placeholder="" className="h-24 input input-bordered"
-                        {...register("desciption", { required: true })}
+                        {...register("description", { required: true })}
                     />
-                    {errors.desciption && (
+                    {errors.description && (
                         <p className="text-red-500 font-light text-sm">desciption is required</p>
                     )}
                 </div>
