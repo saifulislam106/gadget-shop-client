@@ -43,11 +43,6 @@ const Register = () => {
                 navigate("/")
             })
         })
-
-
-
-
-        
         // console.log(userData);
 
     }

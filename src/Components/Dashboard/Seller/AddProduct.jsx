@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const AddProduct = () => {
+    const {user} =useAuth()
     const {
         register,
         handleSubmit,
@@ -9,9 +13,37 @@ const AddProduct = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const title = data.title;
+        const price = parseFloat(data.price);
+        const brend = data.brend;
+        const stock = data.stock;
+        const cetagory = data.cetagory;
+        const description = data.description;
+        const sellerEmial = user.email;
+        const product ={
+            title ,price , brend, stock, cetagory, description, sellerEmial
+        };
+        const token = localStorage.getItem("access-token");
+
+        axios.post("http://localhost:4000/add-products" ,product ,{
+            headers: {
+                authorization : `Baerer ${token}`
+            },
+        })
+        .then((res)=>{
+            if(res.data.insertedId){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Product added sucessfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            }
+            console.log(res);
+        })
     }
-// title price stoke brande desciption cetagory btn 
+
     return (
         <div>
             <h2 className="font-semibold text-2xl text-center">Add Product</h2>
