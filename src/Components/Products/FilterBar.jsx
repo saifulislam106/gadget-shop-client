@@ -3,7 +3,7 @@
 
 const FilterBar = ({setBrand,setCategory,uniqueCategory ,uniqueBrand ,handleReset}) => {
     return (
-        <div className="bg-gray-200 p-4 min-h-screen rounded-t-md flex flex-col gap-3">
+        <div className="bg-gray-200 p-4 min-h-screen h-full rounded-t-md flex flex-col gap-3">
             <h3 className="font-bold text-xl">Filter</h3>
 
             <select onChange={(e)=>setBrand(e.target.value)} className="select w-full max-w-xs">

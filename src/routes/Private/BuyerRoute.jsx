@@ -1,11 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import Loading from "../../Pages/Loading";
 import useUserData from "../../Hooks/useUserData";
+import Loading from "../../Pages/Loading";
 
 
-// eslint-disable-next-line react/prop-types
-const SellerRoute = ({children}) => {
+const BuyerRoute = ({children}) => {
     const { user, loading } = useAuth ();
 
     const userData = useUserData()
@@ -14,10 +14,10 @@ const SellerRoute = ({children}) => {
     if (loading || !userData.role) {
         return <Loading></Loading>
     }
-    if (user && userData.role === "Seller") {
+    if (user && userData.role === "Buyer") {
         return children
     }
     return <Navigate to="/login" state={{ form: loacation }} replace/>
 };
 
-export default SellerRoute;
+export default BuyerRoute;

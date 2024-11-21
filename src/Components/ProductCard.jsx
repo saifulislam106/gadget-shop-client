@@ -4,29 +4,59 @@ import useUserData from "../Hooks/useUserData";
 import Swal from "sweetalert2";
 
 // eslint-disable-next-line react/prop-types
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isInWishlist ,setRemoveWishlist }) => {
   //   eslint-disable-next-line react/prop-types
-  const { title , brand, price, stock, category, description, imageUrl } =
+  const { title, brand, price, stock, category, description, imageUrl } =
     product;
-    const userData = useUserData();
-    const userEmail = userData.email;
 
-    const handleWishlist = async()=>{
-      await axios.patch("http://localhost:4000/wishlist/add" , {
+  const userData = useUserData();
+  const userEmail = userData.email;
+  console.log(userData, userEmail);
+
+  const handleWishlist = async () => {
+    try {
+      const res = await axios.patch("http://localhost:4000/wishlist/add", {
         userEmail: userEmail,
-        productId: product._id
-      }).then((res)=> {
-        if(res.data.modifiedCount){
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Product added sucessfully",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
+        productId: product._id,
       });
+      // console.log(res.data);
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Product added to wishlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        
+      }
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+  const handleRemoveFormWishlist = async () => {
+    try {
+      const res = await axios.patch("http://localhost:4000/wishlist/remove", {
+        userEmail: userEmail,
+        productId: product._id,
+      });
+      // console.log(res.data);
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Product remove form your wishlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setRemoveWishlist((del)=>!del)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // console.log(product);
   return (
     <div className="bg-slate-200 p-4 shadow-md border-1 rounded-md flex flex-col flex-grow">
@@ -49,7 +79,13 @@ const ProductCard = ({ product }) => {
           <span className="font-bold">Description</span>: {description}
         </p>
         <div className="card-actions w-full">
-          <button className="btn btn-outline w-full">Add to wishlist</button>
+          {isInWishlist ? (
+            <button onClick={handleRemoveFormWishlist} className="btn btn-outline w-full btn-secondary">Remove form wishlist</button>
+          ) : (
+            <button onClick={handleWishlist} className="btn btn-outline w-full">
+              Add to wishlist
+            </button>
+          )}
         </div>
       </div>
     </div>
