@@ -23,8 +23,8 @@ export const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contacts", element: <Contact /> },
       { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> }
-    ]
+      { path: "/register", element: <Register /> },
+    ],
   },
   {
     path: "/dashboard",
@@ -36,18 +36,25 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/overview",
-        element: <Overview />
+        element: <Overview />,
       },
-      // seller routes 
+      // seller routes
       {
         path: "/dashboard/my-products",
-        element: <SellerRoute><MyProduct/></SellerRoute>,
+        element: (
+          <SellerRoute>
+            <MyProduct />
+          </SellerRoute>
+        ),
       },
       {
         path: "/dashboard/add-products",
-        element: <SellerRoute><AddProduct/></SellerRoute>,
+        element: (
+          <SellerRoute>
+            <AddProduct />
+          </SellerRoute>
+        ),
       },
-
-    ]
-  }
+    ],
+  },
 ]);

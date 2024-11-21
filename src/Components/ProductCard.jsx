@@ -1,8 +1,32 @@
+/* eslint-disable react/prop-types */
+import axios from "axios";
+import useUserData from "../Hooks/useUserData";
+import Swal from "sweetalert2";
+
 // eslint-disable-next-line react/prop-types
 const ProductCard = ({ product }) => {
   //   eslint-disable-next-line react/prop-types
   const { title , brand, price, stock, category, description, imageUrl } =
     product;
+    const userData = useUserData();
+    const userEmail = userData.email;
+
+    const handleWishlist = async()=>{
+      await axios.patch("http://localhost:4000/wishlist/add" , {
+        userEmail: userEmail,
+        productId: product._id
+      }).then((res)=> {
+        if(res.data.modifiedCount){
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Product added sucessfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      });
+    }
   // console.log(product);
   return (
     <div className="bg-slate-200 p-4 shadow-md border-1 rounded-md flex flex-col flex-grow">
